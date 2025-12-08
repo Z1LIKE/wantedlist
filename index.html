@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>МВД: Розыск лиц</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        header {
+            background: linear-gradient(90deg, #111827, #1f2937);
+            color: #f9fafb;
+            padding: 16px 24px;
+            border-bottom: 4px solid #b91c1c;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .emblem {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.05em;
+        }
+
+        .header-text p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        nav {
+            background-color: #1f2937;
+            color: #e5e7eb;
+            display: flex;
+            gap: 24px;
+            padding: 8px 24px;
+            font-size: 14px;
+        }
+
+        nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a.active,
+        nav a:hover {
+            border-bottom-color: #f97316;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 0 16px 32px;
+        }
+
+        .page-title {
+            margin-bottom: 16px;
+            border-left: 4px solid #b91c1c;
+            padding-left: 12px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .page-title p {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        .notice {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #7f1d1d;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .wanted-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .wanted-card {
+            background-color: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .wanted-header {
+            background-color: #111827;
+            color: #f9fafb;
+            padding: 8px 12px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wanted-header span {
+            font-weight: 600;
+        }
+
+        .wanted-status {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            background-color: #b91c1c;
+            color: #fee2e2;
+        }
+
+        .wanted-body {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .wanted-photo {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border: 1px solid #d1d5db;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #4b5563;
+        }
+
+        .wanted-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .wanted-info h3 {
+            margin: 0 0 4px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .wanted-info .line {
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .wanted-info .label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .wanted-info .highlight {
+            background-color: #fef9c3;
+        }
+
+        .wanted-footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #4b5563;
+        }
+
+        .contact-block {
+            margin-top: 24px;
+            padding: 12px 14px;
+            border-radius: 4px;
+            background-color: #111827;
+            color: #e5e7eb;
+            font-size: 13px;
+        }
+
+        .contact-block strong {
+            color: #fef3c7;
+        }
+
+        @media (max-width: 640px) {
+            header {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            .header-text h1 {
+                font-size: 18px;
+            }
+            .wanted-body {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="emblem">
+        <!-- Место под "герб" или логотип -->
+        МВД<br>РФ
+    </div>
+    <div class="header-text">
+        <h1>Министерство внутренних дел</h1>
+        <p>Официальная информация о лицах, разыскиваемых правоохранительными органами</p>
+    </div>
+</header>
+
+<nav>
+    <a href="#" class="active">Розыск</a>
+    <a href="#">Новости</a>
+    <a href="#">Контакты</a>
+    <a href="#">Памятка гражданам</a>
+</nav>
+
+<main>
+    <section class="page-title">
+        <h2>Розыск лиц</h2>
+        <p>Информация о лицах, находящихся в розыске. Данные публикуются для содействия граждан в их установлении.</p>
+    </section>
+
+    <div class="notice">
+        Вся размещённая информация носит официальный характер. При наличии сведений о разыскиваемых лицах просьба незамедлительно сообщить по указанным контактам.
+    </div>
+
+    <section class="wanted-grid">
+
+        <!-- БЛОК РАЗЫСКИВАЕМОГО №1 -->
+        <article class="wanted-card">
+            <div class="wanted-header">
+                <span>Разыскивается</span>
+                <span class="wanted-status">Федеральный розыск</span>
+            </div>
+            <div class="wanted-body">
+                <div class="wanted-photo">
+                    <!-- СЮДА ВСТАВЛЯЕШЬ СВОЮ ФОТОГРАФИЮ -->
+                    <img src="img/shuvalov.jpg" alt="Фотография Иванова И.И.">
+                </div>
+                <div class="wanted-info">
+                    <!-- ФИО -->
+                    <h3>Шувалов Роман Евгеньевич</h3>
+
+                    <!-- Дата рождения -->
+                    <div class="line">
+                        <span class="label">Дата рождения:</span> 21.09.2006
+                    </div>
+
+                    <!-- Место рождения или регион -->
+                    <div class="line">
+                        <span class="label">Регион розыска:</span> г. Москва, г. Елизов
+                    </div>
+
+                    <!-- Статья/основание -->
+                    <div class="line">
+                        <span class="label">Основание розыска:</span>
+                        <span class="highlight">За злостное уклонение от прохождение срочной службы, предусмотренное ст. 328 Уголовного кодекса Российской Федерации</span>
+                    </div>
+
+                    <!-- Особые приметы -->
+                    <div class="line">
+                        <span class="label">Особые приметы:</span>
+                        Рост 185 см, маниакальный взгляд, зачастую презентабельный внешний вид.
+                    </div>
+
+                    <!-- Дополнительное описание -->
+                    <div class="line">
+                        <span class="label">Примечание:</span>
+                        может представляться сотрудником государственных органов, использовать поддельные документы.
+                    </div>
+                </div>
+            </div>
+            <div class="wanted-footer">
+                При получении любой информации о местонахождении указанного лица незамедлительно обратитесь в ближайший отдел полиции.
+            </div>
+        </article>
+
+        <!-- БЛОК РАЗЫСКИВАЕМОГО №2 (Шаблон, копируй сколько надо) -->
+        <article class="wanted-card">
+            <div class="wanted-header">
+                <span>Разыскивается</span>
+                <span class="wanted-status">Международный розыск</span>
+            </div>
+            <div class="wanted-body">
+                <div class="wanted-photo">
+                    <!-- Заменяешь на свою фотографию -->
+                    <!-- Пример: <img src="img/petrov.jpg" alt="Фотография Петрова П.П."> -->
+                    ФОТО<br>ОТСУТСВУЕТ
+                </div>
+                <div class="wanted-info">
+                    <h3>Батурин Илья Александрович</h3>
+                    <div class="line">
+                        <span class="label">Дата рождения:</span> 15.11.2003
+                    </div>
+                    <div class="line">
+                        <span class="label">Регион розыска:</span> г. Москва, возможен выезд за пределы РФ
+                    </div>
+                    <div class="line">
+                        <span class="label">Основание розыска:</span>
+                        розыск по линии Интерпола, злостное уклонение от прохождения обязательной воинской службы на территории Республики Казахстан.
+                    </div>
+                    <div class="line">
+                        <span class="label">Особые приметы:</span>
+                        длиные волосы, рокерский внешний вид, возможна смена имиджа.
+                    </div>
+                    <div class="line">
+                        <span class="label">Примечание:</span>
+                        вооружён, может находиться в группе.
+                    </div>
+                </div>
+            </div>
+            <div class="wanted-footer">
+                Не пытайтесь задерживать самостоятельно. Сообщите о местонахождении по телефонам дежурной части.
+            </div>
+        </article>
+
+
+        <!-- ЕСЛИ НУЖНО БОЛЬШЕ ЛЮДЕЙ, ПРОСТО СКОПИРУЙ <article class="wanted-card"> ... </article> -->
+
+    </section>
+
+    <section class="contact-block">
+        <div><strong>Телефон дежурной части:</strong> +7 (000) 000-00-00</div>
+        <div><strong>Телефон доверия:</strong> +7 (000) 111-11-11</div>
+        <div><strong>Электронная почта:</strong> info@mvd.example</div>
+        <div><strong>Адрес:</strong> 000000, г. Примерск, ул. Служебная, д. 1</div>
+    </section>
+</main>
+</body>
+</html>
