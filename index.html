@@ -5,11 +5,18 @@
     <title>МВД: Розыск лиц</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        * ,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             background-color: #f3f4f6;
             color: #111827;
+            transition: background-color 0.2s ease, color 0.2s ease;
         }
 
         header {
@@ -54,6 +61,7 @@
             gap: 24px;
             padding: 8px 24px;
             font-size: 14px;
+            align-items: center;
         }
 
         nav a {
@@ -68,10 +76,37 @@
             border-bottom-color: #f97316;
         }
 
+        .nav-spacer {
+            flex: 1;
+        }
+
+        .theme-toggle {
+            border: 1px solid #4b5563;
+            background-color: #111827;
+            color: #e5e7eb;
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .theme-toggle:hover {
+            background-color: #111827;
+            border-color: #f97316;
+        }
+
         main {
             max-width: 1100px;
             margin: 24px auto;
             padding: 0 16px 32px;
+        }
+
+        .page-header-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
         }
 
         .page-title {
@@ -90,6 +125,23 @@
             margin: 4px 0 0;
             font-size: 13px;
             color: #4b5563;
+        }
+
+        .print-page-btn {
+            border: 1px solid #4b5563;
+            background-color: #ffffff;
+            color: #111827;
+            padding: 8px 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .print-page-btn:hover {
+            border-color: #111827;
         }
 
         .notice {
@@ -116,6 +168,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            height: 100%;
         }
 
         .wanted-header {
@@ -161,12 +214,13 @@
             text-align: center;
             text-transform: uppercase;
             color: #4b5563;
+            overflow: hidden; /* чтобы всё в ровной рамке */
         }
 
         .wanted-photo img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* одинаковая рамка, без соплей по высоте */
             display: block;
         }
 
@@ -197,6 +251,28 @@
             color: #4b5563;
         }
 
+        .wanted-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .print-card-btn {
+            border: 1px solid #4b5563;
+            background-color: #ffffff;
+            color: #111827;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .print-card-btn:hover {
+            border-color: #111827;
+        }
+
         .contact-block {
             margin-top: 24px;
             padding: 12px 14px;
@@ -210,24 +286,249 @@
             color: #fef3c7;
         }
 
+        /* ТЁМНАЯ ТЕМА */
+
+        body.dark {
+            background-color: #050810;
+            color: #e5e7eb;
+        }
+
+        body.dark header {
+            background: linear-gradient(90deg, #020617, #030712);
+            border-bottom-color: #7f1d1d;
+        }
+
+        body.dark .emblem {
+            border-color: #e5e7eb;
+        }
+
+        body.dark nav {
+            background-color: #020617;
+            color: #e5e7eb;
+        }
+
+        body.dark nav a {
+            color: #e5e7eb;
+        }
+
+        body.dark nav a.active,
+        body.dark nav a:hover {
+            border-bottom-color: #f97316;
+        }
+
+        body.dark .theme-toggle {
+            background-color: #020617;
+            border-color: #4b5563;
+            color: #e5e7eb;
+        }
+
+        body.dark main {
+            color: #e5e7eb;
+        }
+
+        body.dark .page-title {
+            border-left-color: #7f1d1d;
+        }
+
+        body.dark .page-title p {
+            color: #9ca3af;
+        }
+
+        body.dark .notice {
+            background-color: #451717;
+            border-color: #7f1d1d;
+            color: #fecaca;
+        }
+
+        body.dark .wanted-card {
+            background-color: #020617;
+            border-color: #111827;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        body.dark .wanted-header {
+            background-color: #020617;
+            color: #e5e7eb;
+        }
+
+        body.dark .wanted-status {
+            background-color: #7f1d1d;
+            color: #fee2e2;
+        }
+
+        body.dark .wanted-info .label {
+            color: #e5e7eb;
+        }
+
+        body.dark .wanted-footer {
+            border-top-color: #111827;
+            color: #d1d5db;
+        }
+
+        body.dark .print-card-btn,
+        body.dark .print-page-btn {
+            background-color: #020617;
+            color: #e5e7eb;
+            border-color: #4b5563;
+        }
+
+        body.dark .print-card-btn:hover,
+        body.dark .print-page-btn:hover {
+            border-color: #f97316;
+        }
+
+        body.dark .contact-block {
+            background-color: #020617;
+            color: #e5e7eb;
+        }
+
+        /* АДАПТИВ */
+
+        @media (max-width: 900px) {
+            nav {
+                flex-wrap: wrap;
+                row-gap: 4px;
+                column-gap: 16px;
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+        }
+
         @media (max-width: 640px) {
             header {
-                flex-direction: row;
+                flex-direction: column;
                 align-items: flex-start;
+                gap: 8px;
+                padding: 12px 16px;
             }
+
+            .emblem {
+                width: 48px;
+                height: 48px;
+                font-size: 9px;
+            }
+
             .header-text h1 {
                 font-size: 18px;
             }
+
+            .header-text p {
+                font-size: 12px;
+            }
+
+            main {
+                margin: 16px auto;
+                padding: 0 12px 24px;
+            }
+
+            .page-title h2 {
+                font-size: 18px;
+            }
+
+            .page-title p {
+                font-size: 12px;
+            }
+
+            .notice {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+
             .wanted-body {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* фото сверху */
+                gap: 10px;
+            }
+
+            .wanted-info h3 {
+                font-size: 15px;
+            }
+
+            .wanted-info .line {
+                font-size: 12px;
+            }
+
+            .contact-block {
+                font-size: 12px;
+                padding: 10px 12px;
             }
         }
+
+        @media (max-width: 480px) {
+            nav {
+                font-size: 12px;
+                padding: 6px 12px;
+                column-gap: 12px;
+            }
+
+            .header-text h1 {
+                font-size: 16px;
+            }
+
+            .wanted-header {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .wanted-status {
+                font-size: 10px;
+                padding: 1px 4px;
+            }
+
+            .wanted-body {
+                padding: 10px;
+            }
+
+            .wanted-photo {
+                max-width: 220px;
+                margin: 0 auto;
+            }
+        }
+
+        /* ПЕЧАТЬ */
+
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+
+            header,
+            nav,
+            .print-page-btn,
+            .print-card-btn,
+            .theme-toggle {
+                display: none !important;
+            }
+
+            main {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .wanted-card {
+                page-break-inside: avoid;
+                border-color: #000000;
+                box-shadow: none;
+            }
+
+            .contact-block {
+                border: 1px solid #000000;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+
+            .notice {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+            }
+        }
+
     </style>
 </head>
 <body>
 <header>
     <div class="emblem">
-        <!-- Место под "герб" или логотип -->
         МВД<br>РФ
     </div>
     <div class="header-text">
@@ -241,12 +542,19 @@
     <a href="#">Новости</a>
     <a href="#">Контакты</a>
     <a href="#">Памятка гражданам</a>
+    <div class="nav-spacer"></div>
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">Тёмная версия</button>
 </nav>
 
 <main>
-    <section class="page-title">
-        <h2>Розыск лиц</h2>
-        <p>Информация о лицах, находящихся в розыске. Данные публикуются для содействия граждан в их установлении.</p>
+    <section class="page-header-row">
+        <div class="page-title">
+            <h2>Их разыскивает милиция!</h2>
+            <p>Информация о лицах, находящихся в розыске. Данные публикуются для содействия граждан в их установлении.</p>
+        </div>
+        <button class="print-page-btn" type="button" onclick="window.print()">
+            🖨 Распечатать все ориентировки
+        </button>
     </section>
 
     <div class="notice">
@@ -256,43 +564,37 @@
     <section class="wanted-grid">
 
         <!-- БЛОК РАЗЫСКИВАЕМОГО №1 -->
-        <article class="wanted-card">
+        <article class="wanted-card" id="wanted-1">
             <div class="wanted-header">
                 <span>Разыскивается</span>
                 <span class="wanted-status">Федеральный розыск</span>
             </div>
             <div class="wanted-body">
                 <div class="wanted-photo">
-                    <!-- СЮДА ВСТАВЛЯЕШЬ СВОЮ ФОТОГРАФИЮ -->
-                    <img src="img/shuvalov.jpg" alt="Фотография Иванова И.И.">
+                    <!-- ТВОЁ ФОТО -->
+                    <img src="img/shuvalov.jpg" alt="Фотография Шувалова Романа Евгеньевича">
                 </div>
                 <div class="wanted-info">
-                    <!-- ФИО -->
                     <h3>Шувалов Роман Евгеньевич</h3>
 
-                    <!-- Дата рождения -->
                     <div class="line">
                         <span class="label">Дата рождения:</span> 21.09.2006
                     </div>
 
-                    <!-- Место рождения или регион -->
                     <div class="line">
-                        <span class="label">Регион розыска:</span> г. Москва, г. Елизов
+                        <span class="label">Регион розыска:</span> г. Москва, г. Елизово
                     </div>
 
-                    <!-- Статья/основание -->
                     <div class="line">
                         <span class="label">Основание розыска:</span>
-                        <span class="highlight">За злостное уклонение от прохождение срочной службы, предусмотренное ст. 328 Уголовного кодекса Российской Федерации</span>
+                        <span class="highlight">за злостное уклонение от прохождения срочной службы, предусмотренное ст. 328 Уголовного кодекса Российской Федерации</span>
                     </div>
 
-                    <!-- Особые приметы -->
                     <div class="line">
                         <span class="label">Особые приметы:</span>
-                        Рост 185 см, маниакальный взгляд, зачастую презентабельный внешний вид.
+                        рост 185 см, маниакальный взгляд, зачастую презентабельный внешний вид.
                     </div>
 
-                    <!-- Дополнительное описание -->
                     <div class="line">
                         <span class="label">Примечание:</span>
                         может представляться сотрудником государственных органов, использовать поддельные документы.
@@ -300,21 +602,24 @@
                 </div>
             </div>
             <div class="wanted-footer">
-                При получении любой информации о местонахождении указанного лица незамедлительно обратитесь в ближайший отдел полиции.
+                <div class="wanted-footer-row">
+                    <span>При получении любой информации о местонахождении указанного лица незамедлительно обратитесь в ближайший отдел полиции.</span>
+                    <button class="print-card-btn" type="button" onclick="printCard('wanted-1')">Распечатать ориентировку</button>
+                </div>
             </div>
         </article>
 
-        <!-- БЛОК РАЗЫСКИВАЕМОГО №2 (Шаблон, копируй сколько надо) -->
-        <article class="wanted-card">
+        <!-- БЛОК РАЗЫСКИВАЕМОГО №2 -->
+        <article class="wanted-card" id="wanted-2">
             <div class="wanted-header">
                 <span>Разыскивается</span>
                 <span class="wanted-status">Международный розыск</span>
             </div>
             <div class="wanted-body">
                 <div class="wanted-photo">
-                    <!-- Заменяешь на свою фотографию -->
-                    <!-- Пример: <img src="img/petrov.jpg" alt="Фотография Петрова П.П."> -->
-                    ФОТО<br>ОТСУТСВУЕТ
+                    <!-- Если появится фото, просто вставь <img> -->
+                    <!-- <img src="img/baturin.jpg" alt="Фотография Батурина Ильи Александровича"> -->
+                    ФОТО<br>ОТСУТСТВУЕТ
                 </div>
                 <div class="wanted-info">
                     <h3>Батурин Илья Александрович</h3>
@@ -330,7 +635,7 @@
                     </div>
                     <div class="line">
                         <span class="label">Особые приметы:</span>
-                        длиные волосы, рокерский внешний вид, возможна смена имиджа.
+                        длинные волосы, рокерский внешний вид, возможна смена имиджа.
                     </div>
                     <div class="line">
                         <span class="label">Примечание:</span>
@@ -339,12 +644,14 @@
                 </div>
             </div>
             <div class="wanted-footer">
-                Не пытайтесь задерживать самостоятельно. Сообщите о местонахождении по телефонам дежурной части.
+                <div class="wanted-footer-row">
+                    <span>Не пытайтесь задерживать самостоятельно. Сообщите о местонахождении по телефонам дежурной части.</span>
+                    <button class="print-card-btn" type="button" onclick="printCard('wanted-2')">Распечатать ориентировку</button>
+                </div>
             </div>
         </article>
 
-
-        <!-- ЕСЛИ НУЖНО БОЛЬШЕ ЛЮДЕЙ, ПРОСТО СКОПИРУЙ <article class="wanted-card"> ... </article> -->
+        <!-- Копируешь <article class="wanted-card" id="wanted-N"> ... </article> для новых людей -->
 
     </section>
 
@@ -355,5 +662,68 @@
         <div><strong>Адрес:</strong> 000000, г. Примерск, ул. Служебная, д. 1</div>
     </section>
 </main>
+
+<script>
+    function toggleTheme() {
+        document.body.classList.toggle('dark');
+    }
+
+    function printCard(id) {
+        const card = document.getElementById(id);
+        if (!card) return;
+
+        const printWindow = window.open('', '_blank');
+        const html = `
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Ориентировка</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        padding: 16px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .wanted-card {
+        max-width: 800px;
+        margin: 0 auto;
+        border: 1px solid #000000;
+        box-shadow: none;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .wanted-header {
+        background-color: #000000;
+        color: #ffffff;
+    }
+    .wanted-footer {
+        border-top: 1px solid #000000;
+    }
+    .wanted-photo {
+        border: 1px solid #000000;
+    }
+    @media print {
+        body { padding: 0; }
+        .wanted-card {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+</head>
+<body>
+${card.outerHTML}
+</body>
+</html>`;
+        printWindow.document.open();
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    }
+</script>
 </body>
 </html>
