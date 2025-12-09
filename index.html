@@ -484,7 +484,7 @@
             }
         }
 
-        /* ПЕЧАТЬ */
+        /* ПЕЧАТЬ ВСЕЙ СТРАНИЦЫ */
 
         @media print {
             body {
@@ -582,7 +582,7 @@
                     </div>
 
                     <div class="line">
-                        <span class="label">Регион розыска:</span> г. Москва, г. Елизово
+                        <span class="label">Регион розыска:</span> г. Москва, г. Елизов
                     </div>
 
                     <div class="line">
@@ -688,26 +688,94 @@
         background-color: #ffffff;
         color: #000000;
     }
+
     .wanted-card {
-        max-width: 800px;
+        max-width: 700px;
         margin: 0 auto;
         border: 1px solid #000000;
-        box-shadow: none;
         border-radius: 4px;
         overflow: hidden;
     }
+
     .wanted-header {
         background-color: #000000;
         color: #ffffff;
+        padding: 8px 12px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
+
+    .wanted-status {
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        border: 1px solid #ffffff;
+    }
+
+    .wanted-body {
+        display: grid;
+        grid-template-columns: 180px 1fr; /* фиксированная колонка под фото */
+        gap: 12px;
+        padding: 12px;
+        align-items: flex-start;
+    }
+
+    .wanted-photo {
+        width: 180px;
+        height: 240px;              /* нормальный размер ориентировочного фото */
+        border: 1px solid #000000;
+        background-color: #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        text-transform: uppercase;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .wanted-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;          /* аккуратная обрезка внутри рамки */
+        display: block;
+    }
+
+    .wanted-info h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .wanted-info .line {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    .wanted-info .label {
+        font-weight: 600;
+    }
+
     .wanted-footer {
         border-top: 1px solid #000000;
+        padding: 8px 12px;
+        font-size: 12px;
     }
-    .wanted-photo {
-        border: 1px solid #000000;
+
+    .wanted-footer-row {
+        display: block;
     }
+
+    button {
+        display: none !important; /* кнопки печати внутри ориентировки не нужны */
+    }
+
     @media print {
-        body { padding: 0; }
+        body { padding: 8px; }
         .wanted-card {
             page-break-inside: avoid;
         }
