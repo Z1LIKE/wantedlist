@@ -33,13 +33,18 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            border: 2px solid #f9fafb;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            text-align: center;
-            text-transform: uppercase;
+            overflow: hidden;          /* чтобы логотип не вылазил из круга */
+        }
+
+        .emblem img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;       /* логотип вписывается аккуратно */
+            display: block;
         }
 
         .header-text h1 {
@@ -214,13 +219,13 @@
             text-align: center;
             text-transform: uppercase;
             color: #4b5563;
-            overflow: hidden; /* чтобы всё в ровной рамке */
+            overflow: hidden;
         }
 
         .wanted-photo img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* одинаковая рамка, без соплей по высоте */
+            object-fit: cover;
             display: block;
         }
 
@@ -405,7 +410,6 @@
             .emblem {
                 width: 48px;
                 height: 48px;
-                font-size: 9px;
             }
 
             .header-text h1 {
@@ -435,7 +439,7 @@
             }
 
             .wanted-body {
-                grid-template-columns: 1fr; /* фото сверху */
+                grid-template-columns: 1fr;
                 gap: 10px;
             }
 
@@ -529,7 +533,7 @@
 <body>
 <header>
     <div class="emblem">
-        МВД<br>РФ
+        <img src="img/logo.png" alt="Эмблема МВД">
     </div>
     <div class="header-text">
         <h1>Министерство внутренних дел</h1>
@@ -563,7 +567,6 @@
 
     <section class="wanted-grid">
 
-        <!-- БЛОК РАЗЫСКИВАЕМОГО №1 -->
         <article class="wanted-card" id="wanted-1">
             <div class="wanted-header">
                 <span>Разыскивается</span>
@@ -571,7 +574,6 @@
             </div>
             <div class="wanted-body">
                 <div class="wanted-photo">
-                    <!-- ТВОЁ ФОТО -->
                     <img src="img/shuvalov.jpg" alt="Фотография Шувалова Романа Евгеньевича">
                 </div>
                 <div class="wanted-info">
@@ -609,7 +611,6 @@
             </div>
         </article>
 
-        <!-- БЛОК РАЗЫСКИВАЕМОГО №2 -->
         <article class="wanted-card" id="wanted-2">
             <div class="wanted-header">
                 <span>Разыскивается</span>
@@ -617,8 +618,6 @@
             </div>
             <div class="wanted-body">
                 <div class="wanted-photo">
-                    <!-- Если появится фото, просто вставь <img> -->
-                    <!-- <img src="img/baturin.jpg" alt="Фотография Батурина Ильи Александровича"> -->
                     ФОТО<br>ОТСУТСТВУЕТ
                 </div>
                 <div class="wanted-info">
@@ -650,8 +649,6 @@
                 </div>
             </div>
         </article>
-
-        <!-- Копируешь <article class="wanted-card" id="wanted-N"> ... </article> для новых людей -->
 
     </section>
 
@@ -718,7 +715,7 @@
 
     .wanted-body {
         display: grid;
-        grid-template-columns: 180px 1fr; /* фиксированная колонка под фото */
+        grid-template-columns: 180px 1fr;
         gap: 12px;
         padding: 12px;
         align-items: flex-start;
@@ -726,7 +723,7 @@
 
     .wanted-photo {
         width: 180px;
-        height: 240px;              /* нормальный размер ориентировочного фото */
+        height: 240px;
         border: 1px solid #000000;
         background-color: #e5e7eb;
         display: flex;
@@ -741,7 +738,7 @@
     .wanted-photo img {
         width: 100%;
         height: 100%;
-        object-fit: cover;          /* аккуратная обрезка внутри рамки */
+        object-fit: cover;
         display: block;
     }
 
@@ -771,7 +768,7 @@
     }
 
     button {
-        display: none !important; /* кнопки печати внутри ориентировки не нужны */
+        display: none !important;
     }
 
     @media print {
